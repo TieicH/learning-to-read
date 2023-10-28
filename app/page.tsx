@@ -1,7 +1,15 @@
 "use client";
-
-import { Home } from "./(components)/Home/page";
+import "./style.css";
 
 export default function App() {
-  return <Home></Home>;
+  return (
+    <div className="homeContainer">
+      <h1>ABECEDARIO</h1>
+      <div className="modalOptions">
+        <a href="/vowels">Vocales</a>
+        <a href="/word">Leer</a>
+        <a href="/consonants">Consonantes</a>
+      </div>
+    </div>
+  );
 }
