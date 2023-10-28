@@ -24,22 +24,26 @@ export default function Consonants() {
 
   return (
     <div className="homeContainer">
-      <a href={"/"}>INICIO</a>
+      <a className="homeLink" href={"/"}>
+        INICIO
+      </a>
       <div className="modalOptions">
-        {CONSONANTS.map((consonant, index) => {
-          const synthesizeBody: SynthesizeProps = {
-            query: consonant.letter,
-          };
-          if (consonant.speakingSpeed)
-            synthesizeBody.speakingSpeed = consonant.speakingSpeed;
-          return (
-            <div className="buttonContainer" key={index}>
-              <button onClick={() => synthesizeText(synthesizeBody)}>
-                {consonant.letter} - {consonant.letter.toLowerCase()}
-              </button>
-            </div>
-          );
-        })}
+        <div className="itemsContainer">
+          {CONSONANTS.map((consonant, index) => {
+            const synthesizeBody: SynthesizeProps = {
+              query: consonant.letter,
+            };
+            if (consonant.speakingSpeed)
+              synthesizeBody.speakingSpeed = consonant.speakingSpeed;
+            return (
+              <div className="buttonContainer" key={index}>
+                <button onClick={() => synthesizeText(synthesizeBody)}>
+                  {consonant.letter} - {consonant.letter.toLowerCase()}
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

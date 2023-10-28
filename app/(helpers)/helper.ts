@@ -17,6 +17,8 @@ export const getAudio = (query: string) => {
     });
 };
 
+export const NORMAL_SPEAKING_SPEED = 0.9;
+
 export const VOWELS = [
   { letter: "A", speakingSpeed: null },
   { letter: "E", speakingSpeed: null },

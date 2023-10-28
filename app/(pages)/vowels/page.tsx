@@ -26,17 +26,21 @@ export default function Vowels() {
 
   return (
     <div className="homeContainer">
-      <a href={"/"}>INICIO</a>
+      <a className="homeLink" href={"/"}>
+        INICIO
+      </a>
       <div className="modalOptions">
-        {VOWELS.map((vowel, index) => {
-          return (
-            <div key={index}>
-              <button onClick={() => synthesizeText({ query: vowel.letter })}>
-                {vowel.letter} - {vowel.letter.toLowerCase()}
-              </button>
-            </div>
-          );
-        })}
+        <div className="itemsContainer">
+          {VOWELS.map((vowel, index) => {
+            return (
+              <div key={index}>
+                <button onClick={() => synthesizeText({ query: vowel.letter })}>
+                  {vowel.letter} - {vowel.letter.toLowerCase()}
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 .homeContainer{
-    border: 1px solid red;
     width: 100%;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -9,21 +9,34 @@
 }
 
 .modalOptions{
-    border: 1px solid red;
+    margin-top: 48px;
     flex: 1;
+}
+
+.itemsContainer{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
+    gap: 32px;
 }
 
 .modalOptions button{
     font-size: 46px;
-    border: 1px solid red;
+    border: 1px solid rgba(0,0,0,0.3);
     border-radius: 8px;
     width: 200px;
     aspect-ratio: 1/1;
+    background-color: #C0E6DE;
+}
+
+.homeLink{
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #70eb7e;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
 .modalOptions button:active {
