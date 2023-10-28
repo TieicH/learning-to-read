@@ -21,14 +21,19 @@ export async function GET(req, res: NextApiResponse) {
 }
 
 export async function POST(req, res: NextApiResponse) {
-  const { query } = await req.json();
+  const {
+    query,
+    pitch = -5,
+    speakingSpeed = 0.5,
+    volumen = 5,
+  } = await req.json();
 
   const request1 = {
     audioConfig: {
       audioEncoding: "OGG_OPUS",
-      pitch: -7.5,
-      speakingRate: 1,
-      volumeGainDb: 5,
+      pitch: pitch,
+      speakingRate: speakingSpeed ?? 0.5,
+      volumeGainDb: volumen,
     },
     voice: {
       languageCode: "es-US",
