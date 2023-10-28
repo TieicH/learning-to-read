@@ -13,6 +13,7 @@
     flex: 1;
     display: flex;
     align-items: flex-start;
+    justify-content: center;
     width: 100%;
 }
 
@@ -39,7 +40,7 @@
 }
 
 .formContainer{
-    width: 100%;
+    width: max(70%, 350px);
 }
 
 .formContainer textarea{

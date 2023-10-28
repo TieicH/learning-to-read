@@ -31,7 +31,7 @@ export default function Consonants() {
         <div className="itemsContainer">
           {CONSONANTS.map((consonant, index) => {
             const synthesizeBody: SynthesizeProps = {
-              query: consonant.letter,
+              query: consonant.pronunciation ?? consonant.letter,
             };
             if (consonant.speakingSpeed)
               synthesizeBody.speakingSpeed = consonant.speakingSpeed;
