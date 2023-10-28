@@ -1,24 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { redisClient } from "../../(helpers)/redisClient";
 
-export async function GET(req, res: NextApiResponse) {
-  const { searchParams } = new URL(req.url);
-  const param = searchParams.get("text");
-  const request = {
-    input: { text: param },
-    voice: { languageCode: "en-US", ssmlGender: "NEUTRAL" as const },
-    audioConfig: { audioEncoding: "MP3" as const },
-  };
+// export async function GET(req, res: NextApiResponse) {
+//   const { searchParams } = new URL(req.url);
+//   const param = searchParams.get("text");
+//   const request = {
+//     input: { text: param },
+//     voice: { languageCode: "en-US", ssmlGender: "NEUTRAL" as const },
+//     audioConfig: { audioEncoding: "MP3" as const },
+//   };
 
-  const data = await fetch(
-    `https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
-    {
-      method: "POST",
-      body: JSON.stringify(request),
-    }
-  );
-  const response = await data.json();
-  return Response.json({ ...response });
-}
+//   const data = await fetch(
+//     `https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+//     {
+//       method: "POST",
+//       body: JSON.stringify(request),
+//     }
+//   );
+//   const response = await data.json();
+//   return Response.json({ ...response });
+// }
 
 export async function POST(req, res: NextApiResponse) {
   const {
@@ -28,7 +29,11 @@ export async function POST(req, res: NextApiResponse) {
     volumen = 5,
   } = await req.json();
 
-  const request1 = {
+  const redisResponse = await redisClient.json.get(`letter:${query}`);
+
+  if (!!redisResponse) return Response.json({ ...redisResponse });
+
+  const synthesizeRequest = {
     audioConfig: {
       audioEncoding: "OGG_OPUS",
       pitch: pitch,
@@ -46,9 +51,14 @@ export async function POST(req, res: NextApiResponse) {
     `https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
     {
       method: "POST",
-      body: JSON.stringify(request1),
+      body: JSON.stringify(synthesizeRequest),
     }
   );
+
   const response = await data.json();
+  await redisClient.json.set(`letter:${query}`, "$", {
+    audioContent: response.audioContent ?? "",
+  });
+
   return Response.json({ ...response });
 }
