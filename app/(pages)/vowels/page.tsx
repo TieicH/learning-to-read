@@ -7,22 +7,19 @@ import "./style.css";
 
 export default function Vowels() {
   const { mutate } = useSynthesize();
-  const synthesizeText = ({ query }: SynthesizeProps) =>
-    mutate(
-      { query },
-      {
-        onSuccess(response) {
-          if (response.status === 200) {
-            const audioContent = response.data.audioContent;
-            const audioSrc = `data:audio/mp3;base64,${audioContent}`;
-            const audioElement = new Audio(audioSrc);
-            audioElement.play();
-          } else {
-            throw Error(response.statusText);
-          }
-        },
-      }
-    );
+  const synthesizeText = (params: SynthesizeProps) =>
+    mutate(params, {
+      onSuccess(response) {
+        if (response.status === 200) {
+          const audioContent = response.data.audioContent;
+          const audioSrc = `data:audio/mp3;base64,${audioContent}`;
+          const audioElement = new Audio(audioSrc);
+          audioElement.play();
+        } else {
+          throw Error(response.statusText);
+        }
+      },
+    });
 
   return (
     <div className="homeContainer">
@@ -34,7 +31,11 @@ export default function Vowels() {
           {VOWELS.map((vowel, index) => {
             return (
               <div key={index}>
-                <button onClick={() => synthesizeText({ query: vowel.letter })}>
+                <button
+                  onClick={() =>
+                    synthesizeText({ query: vowel.letter, type: vowel.type })
+                  }
+                >
                   {vowel.letter} - {vowel.letter.toLowerCase()}
                 </button>
               </div>

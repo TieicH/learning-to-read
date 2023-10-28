@@ -10,6 +10,7 @@ export type SynthesizeProps = {
   speakingSpeed?: number;
   pitch?: number;
   encoding?: string;
+  type: string;
 };
 
 export const useSynthesize = () => {

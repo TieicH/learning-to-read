@@ -32,6 +32,7 @@ export default function Consonants() {
           {CONSONANTS.map((consonant, index) => {
             const synthesizeBody: SynthesizeProps = {
               query: consonant.pronunciation ?? consonant.letter,
+              type: consonant.type,
             };
             if (consonant.speakingSpeed)
               synthesizeBody.speakingSpeed = consonant.speakingSpeed;

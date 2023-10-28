@@ -29,6 +29,7 @@ export default function Word() {
       synthesizeText({
         query: textInput as string,
         speakingSpeed: NORMAL_SPEAKING_SPEED,
+        type: "sentence",
       });
     }
   };

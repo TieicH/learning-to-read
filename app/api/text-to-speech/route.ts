@@ -27,11 +27,13 @@ export async function POST(req, res: NextApiResponse) {
     pitch = -5,
     speakingSpeed = 0.5,
     volumen = 5,
+    type,
   } = await req.json();
 
-  const redisResponse = await redisClient.json.get(`letter:${query}`);
-
-  if (!!redisResponse) return Response.json({ ...redisResponse });
+  if (type === "letter") {
+    const redisResponse = await redisClient.json.get(`letter:${query}`);
+    if (!!redisResponse) return Response.json({ ...redisResponse });
+  }
 
   const synthesizeRequest = {
     audioConfig: {
@@ -56,9 +58,12 @@ export async function POST(req, res: NextApiResponse) {
   );
 
   const response = await data.json();
-  await redisClient.json.set(`letter:${query}`, "$", {
-    audioContent: response.audioContent ?? "",
-  });
+
+  if (type === "letter") {
+    await redisClient.json.set(`letter:${query}`, "$", {
+      audioContent: response.audioContent ?? "",
+    });
+  }
 
   return Response.json({ ...response });
 }
