@@ -24,10 +24,10 @@ import { redisClient } from '../../(helpers)/redisClient';
 export async function POST(req, res: NextApiResponse) {
   const { query, pitch = -5, speakingSpeed = 0.5, volumen = 5, type, ssml, languageCode = 'es-US', name = 'es-US-Neural2-C' } = await req.json();
 
-  // if (type === 'letter') {
-  //   const redisResponse = await redisClient.json.get(`letter:${query}`);
-  //   if (!!redisResponse) return Response.json({ ...redisResponse });
-  // }
+  if (type === 'letter') {
+    const redisResponse = await redisClient.json.get(`letter:${query}`);
+    if (!!redisResponse) return Response.json({ ...redisResponse });
+  }
 
   const synthesizeRequest: any = {
     audioConfig: {
@@ -55,11 +55,11 @@ export async function POST(req, res: NextApiResponse) {
 
   const response = await data.json();
 
-  // if (type === 'letter') {
-  //   await redisClient.json.set(`letter:${query}`, '$', {
-  //     audioContent: response.audioContent ?? ''
-  //   });
-  // }
+  if (type === 'letter') {
+    await redisClient.json.set(`letter:${query}`, '$', {
+      audioContent: response.audioContent ?? ''
+    });
+  }
 
   return Response.json({ ...response });
 }
