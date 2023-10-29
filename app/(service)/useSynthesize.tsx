@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export type SynthesizeProps = {
   query: string;
+  queryId: string;
   language?: string;
   voice?: string;
   volumen?: number;

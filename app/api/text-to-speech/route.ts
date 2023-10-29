@@ -22,10 +22,10 @@ import { redisClient } from '../../(helpers)/redisClient';
 // }
 
 export async function POST(req, res: NextApiResponse) {
-  const { query, pitch = -5, speakingSpeed = 0.5, volumen = 5, type, ssml, languageCode = 'es-US', name = 'es-US-Neural2-C' } = await req.json();
+  const { query, pitch = -5, speakingSpeed = 0.5, volumen = 5, type, ssml, languageCode = 'es-US', name = 'es-US-Neural2-C', queryId } = await req.json();
 
   if (type === 'letter') {
-    const redisResponse = await redisClient.json.get(`letter:${query}`);
+    const redisResponse = await redisClient.json.get(`letter:${queryId}`);
     if (!!redisResponse) return Response.json({ ...redisResponse });
   }
 
@@ -56,7 +56,7 @@ export async function POST(req, res: NextApiResponse) {
   const response = await data.json();
 
   if (type === 'letter') {
-    await redisClient.json.set(`letter:${query}`, '$', {
+    await redisClient.json.set(`letter:${queryId}`, '$', {
       audioContent: response.audioContent ?? ''
     });
   }

@@ -30,7 +30,8 @@ export default function Letter({ params }: { params: { letter: string } }) {
 
   const synthesizeBody: SynthesizeProps = {
     query: data.pronunciation ?? data.letter,
-    type: data.type
+    type: data.type,
+    queryId: data.letter
   };
   if (data.speakingSpeed) synthesizeBody.speakingSpeed = data.speakingSpeed;
 
@@ -55,7 +56,8 @@ export default function Letter({ params }: { params: { letter: string } }) {
                   const synthesizeConjugationBody: SynthesizeProps = {
                     query: conjugation.pronunciation ?? conjugation.letter,
                     type: conjugation.type,
-                    ssml: conjugation.ssml
+                    ssml: conjugation.ssml,
+                    queryId: conjugation.letter
                   };
                   if (conjugation.speakingSpeed) synthesizeConjugationBody.speakingSpeed = conjugation.speakingSpeed;
                   if (conjugation.languageCode) synthesizeConjugationBody.languageCode = conjugation.languageCode;

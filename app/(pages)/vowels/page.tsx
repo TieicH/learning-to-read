@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { VOWELS } from "../../(helpers)/helper";
-import { SynthesizeProps, useSynthesize } from "../../(service)/useSynthesize";
-import "./style.css";
+import React from 'react';
+import { VOWELS } from '../../(helpers)/helper';
+import { SynthesizeProps, useSynthesize } from '../../(service)/useSynthesize';
+import './style.css';
 
 export default function Vowels() {
   const { mutate } = useSynthesize();
@@ -18,12 +18,12 @@ export default function Vowels() {
         } else {
           throw Error(response.statusText);
         }
-      },
+      }
     });
 
   return (
     <div className="homeContainer">
-      <a className="homeLink" href={"/"}>
+      <a className="homeLink" href={'/'}>
         INICIO
       </a>
       <div className="modalOptions">
@@ -31,11 +31,7 @@ export default function Vowels() {
           {VOWELS.map((vowel, index) => {
             return (
               <div key={index}>
-                <button
-                  onClick={() =>
-                    synthesizeText({ query: vowel.letter, type: vowel.type })
-                  }
-                >
+                <button onClick={() => synthesizeText({ query: vowel.letter, type: vowel.type, queryId: vowel.letter })}>
                   {vowel.letter} - {vowel.letter.toLowerCase()}
                 </button>
               </div>
