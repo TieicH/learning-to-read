@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { redisClient } from "../../(helpers)/redisClient";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { redisClient } from '../../(helpers)/redisClient';
 
 // export async function GET(req, res: NextApiResponse) {
 //   const { searchParams } = new URL(req.url);
@@ -22,48 +22,44 @@ import { redisClient } from "../../(helpers)/redisClient";
 // }
 
 export async function POST(req, res: NextApiResponse) {
-  const {
-    query,
-    pitch = -5,
-    speakingSpeed = 0.5,
-    volumen = 5,
-    type,
-  } = await req.json();
+  const { query, pitch = -5, speakingSpeed = 0.5, volumen = 5, type, ssml, languageCode = 'es-US', name = 'es-US-Neural2-C' } = await req.json();
 
-  if (type === "letter") {
-    const redisResponse = await redisClient.json.get(`letter:${query}`);
-    if (!!redisResponse) return Response.json({ ...redisResponse });
-  }
+  // if (type === 'letter') {
+  //   const redisResponse = await redisClient.json.get(`letter:${query}`);
+  //   if (!!redisResponse) return Response.json({ ...redisResponse });
+  // }
 
-  const synthesizeRequest = {
+  const synthesizeRequest: any = {
     audioConfig: {
-      audioEncoding: "OGG_OPUS",
+      audioEncoding: 'OGG_OPUS',
       pitch: pitch,
-      speakingRate: speakingSpeed ?? 0.5,
-      volumeGainDb: volumen,
+      speakingRate: speakingSpeed,
+      volumeGainDb: volumen
     },
     voice: {
-      languageCode: "es-US",
-      name: "es-US-Neural2-C",
-    },
-    input: { text: query },
+      languageCode,
+      name
+    }
   };
 
-  const data = await fetch(
-    `https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
-    {
-      method: "POST",
-      body: JSON.stringify(synthesizeRequest),
-    }
-  );
+  if (ssml) {
+    synthesizeRequest.input = { ssml: `<speak><phoneme alphabet="ipa" ph="${(query as string).toLowerCase()}">${(query as string).toLowerCase()}</phoneme></speak>` };
+  } else {
+    synthesizeRequest.input = { text: query };
+  }
+
+  const data = await fetch(`https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=${process.env.GOOGLE_API_KEY}`, {
+    method: 'POST',
+    body: JSON.stringify(synthesizeRequest)
+  });
 
   const response = await data.json();
 
-  if (type === "letter") {
-    await redisClient.json.set(`letter:${query}`, "$", {
-      audioContent: response.audioContent ?? "",
-    });
-  }
+  // if (type === 'letter') {
+  //   await redisClient.json.set(`letter:${query}`, '$', {
+  //     audioContent: response.audioContent ?? ''
+  //   });
+  // }
 
   return Response.json({ ...response });
 }

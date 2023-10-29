@@ -1,0 +1,64 @@
+.homeContainer{
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 60px;
+}
+
+.modalOptions{
+    margin-top: 48px;
+    flex: 1;
+}
+
+.itemsContainer{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    gap: 32px;
+}
+
+.modalOptions button{
+    font-size: 46px;
+    border: 1px solid rgba(0,0,0,0.3);
+    background-color: #F6CDB6;
+    border-radius: 8px;
+    width: 200px;
+    aspect-ratio: 1/1;
+}
+
+.homeLink{
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #70eb7e;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.modalOptions button:active {
+    background: rgba(0,0,0,0.3);
+}
+
+.buttonContainer{
+    margin-top: 50px;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-evenly;
+}
+
+.buttonContainer button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lowerCase{
+    font-size: 32px;
+}

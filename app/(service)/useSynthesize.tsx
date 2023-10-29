@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { apiEndpoints, cacheTree } from "./constants";
-import axios from "axios";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { apiEndpoints, cacheTree } from './constants';
+import axios from 'axios';
 
 export type SynthesizeProps = {
   query: string;
@@ -11,6 +11,9 @@ export type SynthesizeProps = {
   pitch?: number;
   encoding?: string;
   type: string;
+  ssml?: boolean;
+  languageCode?: string;
+  name?: string;
 };
 
 export const useSynthesize = () => {
@@ -18,8 +21,8 @@ export const useSynthesize = () => {
     mutationKey: [cacheTree.synthetize.name],
     mutationFn: (params: SynthesizeProps) => {
       return axios.post(apiEndpoints.apiSynthesize, {
-        ...params,
+        ...params
       });
-    },
+    }
   });
 };
