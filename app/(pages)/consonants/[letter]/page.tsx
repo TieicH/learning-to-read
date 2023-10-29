@@ -40,7 +40,7 @@ export default function Letter({ params }: { params: { letter: string } }) {
         REGRESAR
       </button>
       <div className="modalOptions">
-        <div className="itemsContainer">
+        <div className="itemsContainer1">
           <div>
             <button
               onClick={() => {
